@@ -56,15 +56,19 @@ document.addEventListener("keyup", (event) =>{
 
 const openReviewDialog = () => {
   debug(">>> openReviewDialog")
-  const approvalHash = '#submit-review'
-  const toAppend = window.location.pathname.includes("files")
-    ? approvalHash
-    : "/files" + approvalHash
-  const newLocation = window.location.hash.includes(approvalHash)
-    ? window.location
-    : window.location + toAppend
+  let newLocation = window.location.toString()
+  newLocation.includes("/files")
+    ? newLocation
+    : newLocation += "/files"
+  newLocation.includes("#submit-review")
+    ? newLocation
+    : newLocation += "#submit-review"
+
   debug("  ", { newLocation })
-  window.location.replace(newLocation)
+
+  newLocation === window.location.toString()
+    ? window.location.reload()
+    : window.location.replace(newLocation)
   sessionStorage.setItem(sessionStorageTrigger, 'true')
   debug("<<<")
 }

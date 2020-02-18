@@ -5,7 +5,8 @@ const approvalButton = 'form[action*="/reviews"] button[type="submit"]'
 const approvalComment = 'form[action*="/reviews"] #pull_request_review_body'
 const sessionStorageTrigger = 'github-approve-shortcut-triggered'
 
-let cmdDown = false
+let commandDown = false
+let shiftDown = false
 
 const debug = (message, object = null) => {
   const debugEnabled = localStorage.getItem('github-approve-shortcut-debug')
@@ -18,14 +19,19 @@ const debug = (message, object = null) => {
 
 document.addEventListener("keydown", (event) =>{
   debug(">>> keydown", { keyCode: event.keyCode })
-  // cmd === 93
+  // command === 93
   if(event.keyCode === 93) {
-    debug("  cmd pressed")
-    cmdDown = true
+    debug("  command pressed")
+    commandDown = true
+  }
+  // shift === 16
+  if(event.keyCode === 16) {
+    debug("  shift pressed")
+    shiftDown = true
   }
   // a === 65
-  if(event.keyCode === 65 && cmdDown) {
-    debug("  cmd+a pressed")
+  if(event.keyCode === 65 && commandDown && shiftDown) {
+    debug("  command+shift+a pressed")
     event.preventDefault()
     event.stopPropagation()
     openReviewDialog()
@@ -35,10 +41,15 @@ document.addEventListener("keydown", (event) =>{
 
 document.addEventListener("keyup", (event) =>{
   debug(">>> keyUp", { keyCode: event.keyCode })
-  // cmd === 93
+  // command === 93
   if(event.keyCode === 93) {
-    debug("  cmd released")
-    cmdDown = false
+    debug("  command released")
+    commandDown = false
+  }
+  // shift === 16
+  if(event.keyCode === 16) {
+    debug("  shift released")
+    shiftDown = false
   }
   debug("<<<")
 })

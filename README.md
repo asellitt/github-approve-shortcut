@@ -1,5 +1,5 @@
 # github-approve-shortcut
-Chrome extension that binds `cmd+a` to approve a PR
+Chrome extension that binds `cmd+shift+a` to approve a PR
 
 To enable debugging, execute the following:
 

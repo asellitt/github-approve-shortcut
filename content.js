@@ -47,7 +47,7 @@ const openReviewDialog = () => {
     : "/files" + approvalUrl
   debug("  ", { toAppend })
   window.location.replace(window.location + toAppend)
-  sessionStorage.setItem(sessionStorageTrigger, true)
+  sessionStorage.setItem(sessionStorageTrigger, 'true')
 }
 
 const onMutation = (mutationList, observer) => {
@@ -58,7 +58,7 @@ const onMutation = (mutationList, observer) => {
 
   if(approvalRadioExists && triggered) {
     console.log("Approving pull request")
-    sessionStorage.setItem(sessionStorageTrigger, false)
+    sessionStorage.setItem(sessionStorageTrigger, 'false')
     document.querySelector(approvalRadio).click()
     document.querySelector(approvalButton).click()
   }

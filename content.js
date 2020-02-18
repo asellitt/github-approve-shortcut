@@ -3,7 +3,6 @@ console.log("[GAS] Github Approve Shortcut")
 const approvalRadio = 'form[action*="/reviews"] input[value="approve"]'
 const approvalButton = 'form[action*="/reviews"] button[type="submit"]'
 const approvalComment = 'form[action*="/reviews"] #pull_request_review_body'
-const approvalUrl = '#submit-review'
 const sessionStorageTrigger = 'github-approve-shortcut-triggered'
 
 let cmdDown = false
@@ -46,11 +45,15 @@ document.addEventListener("keyup", (event) =>{
 
 const openReviewDialog = () => {
   debug(">>> openReviewDialog")
+  const approvalHash = '#submit-review'
   const toAppend = window.location.pathname.includes("files")
-    ? approvalUrl
-    : "/files" + approvalUrl
-  debug("  ", { toAppend })
-  window.location.replace(window.location + toAppend)
+    ? approvalHash
+    : "/files" + approvalHash
+  const newLocation = window.location.hash.includes(approvalHash)
+    ? window.location
+    : window.location + toAppend
+  debug("  ", { newLocation })
+  window.location.replace(newLocation)
   sessionStorage.setItem(sessionStorageTrigger, 'true')
   debug("<<<")
 }

@@ -60,7 +60,7 @@ const onMutation = (mutationList, observer) => {
     console.log("Approving pull request")
     sessionStorage.setItem(sessionStorageTrigger, false)
     document.querySelector(approvalRadio).click()
-    console.log("document.querySelector(approvalButton).click()")
+    document.querySelector(approvalButton).click()
   }
 }
 

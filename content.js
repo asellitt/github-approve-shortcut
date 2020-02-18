@@ -1,4 +1,4 @@
-console.log("Github Approve Shortcut")
+console.log("[GAS] Github Approve Shortcut")
 
 const approvalRadio = 'form[action*="/reviews"] input[value="approve"]'
 const approvalButton = 'form[action*="/reviews"] button[type="submit"]'
@@ -11,7 +11,9 @@ let cmdDown = false
 const debug = (message, object = null) => {
   const debugEnabled = localStorage.getItem('github-approve-shortcut-debug')
   if(debugEnabled) {
-    console.debug(message, object)
+    object
+      ? console.debug(message, object)
+      : console.debug(message)
   }
 }
 
@@ -29,6 +31,7 @@ document.addEventListener("keydown", (event) =>{
     event.stopPropagation()
     openReviewDialog()
   }
+  debug("<<<")
 })
 
 document.addEventListener("keyup", (event) =>{
@@ -38,6 +41,7 @@ document.addEventListener("keyup", (event) =>{
     debug("  cmd released")
     cmdDown = false
   }
+  debug("<<<")
 })
 
 const openReviewDialog = () => {
@@ -48,6 +52,7 @@ const openReviewDialog = () => {
   debug("  ", { toAppend })
   window.location.replace(window.location + toAppend)
   sessionStorage.setItem(sessionStorageTrigger, 'true')
+  debug("<<<")
 }
 
 const onMutation = (mutationList, observer) => {
@@ -57,11 +62,12 @@ const onMutation = (mutationList, observer) => {
   debug("  ", { approvalRadioExists, triggered })
 
   if(approvalRadioExists && triggered) {
-    console.log("Approving pull request")
+    console.log("[GAS] Approving pull request")
     sessionStorage.setItem(sessionStorageTrigger, 'false')
     document.querySelector(approvalRadio).click()
     document.querySelector(approvalButton).click()
   }
+  debug("<<<")
 }
 
 if (document.getElementById("files_bucket") !== null) {

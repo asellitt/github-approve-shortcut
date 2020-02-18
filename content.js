@@ -10,7 +10,7 @@ let shiftDown = false
 
 const debug = (message, object = null) => {
   const debugEnabled = localStorage.getItem('github-approve-shortcut-debug')
-  if(debugEnabled) {
+  if(debugEnabled === 'true') {
     object
       ? console.debug(message, object)
       : console.debug(message)
